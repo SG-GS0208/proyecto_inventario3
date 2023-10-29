@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_productos"
+    app:startDestination="@id/verproductos">
+
+    <fragment
+        android:id="@+id/verproductos"
+        android:name="com.example.proyecto_inventario.controlador.servicios.productos.verproductos"
+        android:label="fragment_verproductos"
+        tools:layout="@layout/fragment_verproductos" />
+</navigation>

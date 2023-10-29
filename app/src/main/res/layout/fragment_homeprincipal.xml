@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".controlador.servicios.homeprincipal">
+    <TextView
+        android:id="@+id/cerrarsesion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="10dp"
+        android:textColor="#0C0C0C"
+        android:fontFamily="@font/amiri"
+        app:layout_constraintTop_toTopOf="parent"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/TV_titulo_bienvenida"
+        android:text="Cerrar Sesión"/>
+
+    <TextView
+        android:id="@+id/TV_titulo_bienvenida"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:textSize="22sp"
+        android:textColor="#974D08"
+        android:fontFamily="@font/inter_medium"
+        app:layout_constraintTop_toTopOf="parent"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/IV_imagen_bienvenida"
+        app:layout_constraintTop_toBottomOf="@id/cerrarsesion"
+        android:text="¡¡BIENVENIDO A STOCKMASTER!!" />
+
+
+    <ImageView
+        android:id="@+id/IV_imagen_bienvenida"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        app:layout_constraintBottom_toTopOf="@id/opcionesdelaapp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/TV_titulo_bienvenida"
+        android:src="@drawable/_832806_4016255_1" />
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/opcionesdelaapp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        app:layout_constraintTop_toBottomOf="@id/IV_imagen_bienvenida" >
+
+    <ImageButton
+        android:id="@+id/IB_inventario"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/domingo4"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/inventariohome"
+        android:contentDescription="@string/intentario"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+        <ImageButton
+            android:id="@+id/IB_producto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/domingo4"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/productos"
+            android:contentDescription="@string/intentario"
+            app:layout_constraintBottom_toTopOf="@id/IB_consulta"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/IB_inventario" />
+
+        <ImageButton
+            android:id="@+id/IB_consulta"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/domingo4"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/consultas"
+            android:contentDescription="@string/intentario"
+            app:layout_constraintBottom_toTopOf="@id/IB_consulta"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/IB_producto" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

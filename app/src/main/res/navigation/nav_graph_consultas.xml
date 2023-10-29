@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_consultas"
+    app:startDestination="@id/consultaproducto">
+
+    <fragment
+        android:id="@+id/consultaproducto"
+        android:name="com.example.proyecto_inventario.controlador.servicios.consultas.consultaproducto"
+        android:label="fragment_consultaproducto"
+        tools:layout="@layout/fragment_consultaproducto" />
+</navigation>
