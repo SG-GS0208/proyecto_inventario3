@@ -57,8 +57,8 @@ class ingreso_alapp : Fragment(R.layout.fragment_ingreso_alapp) {
                 // Credenciales válidas, iniciar sesión
                 startActivity(Intent(requireContext(), HomeProyect::class.java))
             } else {
-                // Credenciales incorrectas, mostrar un mensaje de error
-                Toast.makeText(requireContext(), "Usuario o contraseña incorrectos", Toast.LENGTH_SHORT).show()
+                bindingIngresoalapp.TILUsuario.error = "Usuario incorrecto"
+                bindingIngresoalapp.TILClave.error = "Contraseña incorrecto"
             }
         }
 

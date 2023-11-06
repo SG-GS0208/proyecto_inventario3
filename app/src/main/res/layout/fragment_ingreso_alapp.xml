@@ -58,7 +58,7 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/TIL_usuario"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="70dp"
         android:layout_marginStart="75dp"
         android:layout_marginEnd="25dp"
         android:textColorHint="@color/hint"
@@ -75,8 +75,8 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/TIET_usuario"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:hint="Ingresa tu usuario"
+            android:layout_height="51dp"
+            android:hint=" Ingresa tu usuario"
             android:imeOptions="actionNext"
             android:inputType="text"
             android:background="@drawable/background_bordes"
@@ -117,7 +117,7 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/TIL_clave"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="70dp"
         android:layout_marginStart="75dp"
         android:layout_marginEnd="25dp"
         android:textColorHint="@color/hint"
@@ -135,7 +135,7 @@
             android:id="@+id/TIET_clave"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Ingresa tu contraseña"
+            android:hint=" Ingresa tu contraseña"
             android:imeOptions="actionDone"
             android:inputType="textPassword"
             android:textColor="@color/black"
