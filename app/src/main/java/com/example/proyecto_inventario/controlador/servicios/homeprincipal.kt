@@ -1,6 +1,7 @@
 package com.example.proyecto_inventario.controlador.servicios
 
 import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -35,6 +36,11 @@ class homeprincipal : Fragment(R.layout.fragment_homeprincipal) {
 
 
         bindingHomeprincipal.cerrarsesion.setOnClickListener {
+            val preferencias = requireContext().getSharedPreferences("sesion", Context.MODE_PRIVATE)
+            val editor = preferencias.edit()
+            editor.remove("sesion_iniciada")
+            editor.apply()
+
             mensajecerrarsesion()
         }
 
