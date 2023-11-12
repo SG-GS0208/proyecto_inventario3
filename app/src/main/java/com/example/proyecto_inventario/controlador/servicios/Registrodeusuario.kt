@@ -9,9 +9,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import androidx.activity.addCallback
 import androidx.navigation.fragment.findNavController
 import com.example.proyecto_inventario.R
+import com.example.proyecto_inventario.controlador.ConexionBase.ImplListaDatosDAO
+import com.example.proyecto_inventario.controlador.ConexionBase.conexiobasededatos
+import com.example.proyecto_inventario.controlador.clasedatos.ClasesDatos
 import com.example.proyecto_inventario.databinding.FragmentRegistrodeusuarioBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
@@ -26,7 +30,7 @@ class Registrodeusuario : Fragment(R.layout.fragment_registrodeusuario) {
         super.onViewCreated(view, savedInstanceState)
 
         bindingRegistrodeusuario = FragmentRegistrodeusuarioBinding.bind(view)
-
+        cargarDatos()
         bindingRegistrodeusuario.IBBotonCancelar.setOnClickListener {
             mensajeCancelarRegistro()
         }
@@ -35,6 +39,20 @@ class Registrodeusuario : Fragment(R.layout.fragment_registrodeusuario) {
         }
 
 
+    }
+    private fun cargarDatos() {
+        val listaDatosDAO = ImplListaDatosDAO()
+        val provincias = listaDatosDAO.listaprovinciasSpiner()
+
+        val autoCompleteTextView = bindingRegistrodeusuario.ACTVProvincia // Ajusta el ID según tu diseño
+
+        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, provincias)
+        autoCompleteTextView.setAdapter(adapter)
+
+        autoCompleteTextView.setOnItemClickListener { _, _, position, _ ->
+            val provinciaSeleccionada = adapter.getItem(position) as ClasesDatos.provincia
+            // Puedes realizar acciones con la provincia seleccionada si es necesario
+        }
     }
     private fun mensajeCancelarRegistro() {
         val builder = AlertDialog.Builder(requireContext())

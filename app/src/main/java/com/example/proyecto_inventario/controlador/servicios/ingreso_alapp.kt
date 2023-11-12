@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.navigation.fragment.findNavController
 import com.example.proyecto_inventario.R
+import com.example.proyecto_inventario.controlador.ConexionBase.conexiobasededatos
 import com.example.proyecto_inventario.controlador.HomeProyect
 import com.example.proyecto_inventario.databinding.FragmentIngresoAlappBinding
 
@@ -38,6 +39,14 @@ class ingreso_alapp : Fragment(R.layout.fragment_ingreso_alapp) {
 
         if (sesionIniciada) {
             startActivity(Intent(requireContext(), HomeProyect::class.java))
+        }
+
+
+
+
+        //ejemplo
+        bindingIngresoalapp.TVTitulo.setOnClickListener {
+            showConnectionStatusToast()
         }
 
         bindingIngresoalapp.TVRegistro.setOnClickListener {
@@ -72,6 +81,16 @@ class ingreso_alapp : Fragment(R.layout.fragment_ingreso_alapp) {
 
 
     }
+
+    fun showConnectionStatusToast() {
+        val connection = conexiobasededatos().dbConexion()
+        if (connection != null) {
+            Toast.makeText(requireContext(), "Conectado a la base de datos", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(requireContext(), "No conectado a la base de datos", Toast.LENGTH_SHORT).show()
+        }
+    }
+
 
 
 }

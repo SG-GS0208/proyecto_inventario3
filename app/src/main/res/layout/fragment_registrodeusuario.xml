@@ -458,7 +458,8 @@
                         android:textColor="@color/black"
                         android:textSize="13sp"
                         android:textStyle="bold"
-                        android:fontFamily="@font/inter" />
+                        android:fontFamily="@font/inter"
+                       />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
