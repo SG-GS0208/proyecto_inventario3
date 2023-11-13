@@ -5,11 +5,16 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.LinearLayout
+import android.widget.RadioButton
+import android.widget.RadioGroup
+import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.navigation.fragment.findNavController
 import com.example.proyecto_inventario.R
@@ -18,19 +23,22 @@ import com.example.proyecto_inventario.controlador.ConexionBase.conexiobasededat
 import com.example.proyecto_inventario.controlador.clasedatos.ClasesDatos
 import com.example.proyecto_inventario.databinding.FragmentRegistrodeusuarioBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import org.mindrot.jbcrypt.BCrypt
 
 
 class Registrodeusuario : Fragment(R.layout.fragment_registrodeusuario) {
 
     lateinit var bindingRegistrodeusuario:FragmentRegistrodeusuarioBinding
-
-
+    private val listaDatosDAO = ImplListaDatosDAO()
+    private val saltRounds = 10
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         bindingRegistrodeusuario = FragmentRegistrodeusuarioBinding.bind(view)
-        cargarDatos()
+        cargarDatosprovincia()
+        cargarDatosdistrito()
+
         bindingRegistrodeusuario.IBBotonCancelar.setOnClickListener {
             mensajeCancelarRegistro()
         }
@@ -39,18 +47,85 @@ class Registrodeusuario : Fragment(R.layout.fragment_registrodeusuario) {
         }
 
 
+        bindingRegistrodeusuario.BRegistro.setOnClickListener {
+            if (registrarusuarios()){
+                Toast.makeText(requireContext(), "registrado correctamente", Toast.LENGTH_SHORT).show()
+            }else{
+                Toast.makeText(requireContext(), "no se registro", Toast.LENGTH_SHORT).show()
+            }
+
+        }
+
+
+
+        val radioGroup = view.findViewById<RadioGroup>(R.id.RG_sexo)
+        val sexoArrayList = listaDatosDAO.RGsexo()
+
+
+        for (sexo in sexoArrayList) {
+            val radioButton = RadioButton(requireContext())
+            radioButton.text = sexo.descripcion
+            radioButton.id = sexo.codigo
+
+            // Agregar el RadioButton al RadioGroup
+            radioGroup.addView(radioButton)
+            val layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            )
+            radioGroup.gravity = Gravity.CENTER_HORIZONTAL
+            radioButton.layoutParams = layoutParams
+        }
+
     }
-    private fun cargarDatos() {
-        val listaDatosDAO = ImplListaDatosDAO()
-        val provincias = listaDatosDAO.listaprovinciasSpiner()
+
+    private fun encryptPassword(password: String): String {
+        val salt = BCrypt.gensalt(saltRounds)
+        return BCrypt.hashpw(password, salt)
+    }
+    private fun registrarusuarios():Boolean{
+        val clavecifrada = encryptPassword(bindingRegistrodeusuario.TIETClave.text.toString())
+
+        val datosusuario = ClasesDatos.Registrousuario(
+            codigo = 0,
+            nombre =bindingRegistrodeusuario.TIETNombres.text.toString(),
+            apellidoPaterno = bindingRegistrodeusuario.TIETApellidoPaterno.text.toString(),
+            apellidoMaterno = bindingRegistrodeusuario.TIETApellidoMaterno.text.toString(),
+            codigosexo = bindingRegistrodeusuario.RGSexo.checkedRadioButtonId,
+            dni = bindingRegistrodeusuario.TIETNumeroDocumentoIdentidad.text.toString(),
+            contrasena= clavecifrada,
+            direccion =bindingRegistrodeusuario.TIETDireccion.text.toString(),
+            telefono =bindingRegistrodeusuario.TIETTelefono.text.toString(),
+            correo = bindingRegistrodeusuario.TIETCorreo.text.toString(),
+            codigoprovincia = provincia.codigo,
+            codigodistrito = distrito.codigo
+        )
+        return listaDatosDAO.Registrodeusuario(datosusuario)
+    }
+    private fun cargarDatosprovincia() {
+
+        val listaprovincias = listaDatosDAO.listaprovinciasSpiner()
 
         val autoCompleteTextView = bindingRegistrodeusuario.ACTVProvincia // Ajusta el ID según tu diseño
 
-        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, provincias)
+        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, listaprovincias)
         autoCompleteTextView.setAdapter(adapter)
 
         autoCompleteTextView.setOnItemClickListener { _, _, position, _ ->
-            val provinciaSeleccionada = adapter.getItem(position) as ClasesDatos.provincia
+            provincia = adapter.getItem(position) as ClasesDatos.provincia
+            // Puedes realizar acciones con la provincia seleccionada si es necesario
+        }
+    }
+    private fun cargarDatosdistrito() {
+        val listadistrito = listaDatosDAO.listadistritoSpiner()
+
+        val autoCompleteTextView = bindingRegistrodeusuario.ACTVDistrito // Ajusta el ID según tu diseño
+
+        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, listadistrito)
+        autoCompleteTextView.setAdapter(adapter)
+
+        autoCompleteTextView.setOnItemClickListener { _, _, position, _ ->
+            distrito = adapter.getItem(position) as ClasesDatos.distrito
             // Puedes realizar acciones con la provincia seleccionada si es necesario
         }
     }
@@ -73,6 +148,12 @@ class Registrodeusuario : Fragment(R.layout.fragment_registrodeusuario) {
 
 
         builder.show()
+    }
+
+    companion object{
+        private lateinit var sexo: ClasesDatos.sexo
+        private lateinit var provincia: ClasesDatos.provincia
+        private lateinit var distrito: ClasesDatos.distrito
     }
 
 

@@ -91,6 +91,4 @@ class ingreso_alapp : Fragment(R.layout.fragment_ingreso_alapp) {
         }
     }
 
-
-
 }

@@ -57,6 +57,7 @@ dependencies {
     implementation ("androidx.navigation:navigation-ui-ktx:2.7.4")
     implementation ("androidx.activity:activity-ktx:1.8.0")
 
-
+    //Importando las librería para cifrar contraseñas utilizando el algoritmo bcrypt
+    implementation ("org.mindrot:jbcrypt:0.4")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 }
