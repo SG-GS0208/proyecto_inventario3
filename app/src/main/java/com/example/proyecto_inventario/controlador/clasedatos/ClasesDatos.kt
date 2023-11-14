@@ -31,14 +31,11 @@ class ClasesDatos {
         var nombre:String,
         var apellidoPaterno:String,
         var apellidoMaterno:String,
-        var codigosexo :Int,
         var dni : String,
         var contrasena:String,
-        var direccion:String,
         var telefono:String,
-        var correo:String,
-        var codigoprovincia:Int,
-        var codigodistrito:Int
+        var correo:String
+
     )
 
 

@@ -6,6 +6,7 @@ import java.sql.ResultSet
 import java.sql.SQLException
 import android.util.Log
 import com.example.proyecto_inventario.controlador.clasedatos.ClasesDatos
+import java.text.ParseException
 
 class ImplListaDatosDAO :ListaDatosDAO{
     private val tagErrorDB = "ERROR_CONEXION_BD"
@@ -112,44 +113,77 @@ class ImplListaDatosDAO :ListaDatosDAO{
 
     override fun Registrodeusuario(usuario: ClasesDatos.Registrousuario): Boolean {
 
-        var resultado:Boolean=false
+        var isSuccessful = false
         try{
             if (conexion == null){
-                resultado=false
+
                 Log.e(tagErrorDB,messageErrorDB)
             }else{
                 //Preparando Sentencia Call para ejecutar el Procedimiento Almacenado
-                val cs: CallableStatement = conexion!!.prepareCall("{CALL SP_RegistroUsuario(?,?,?,?,?,?,?,?,?,?,?)}")
+                val cs: CallableStatement = conexion!!.prepareCall("{CALL SP_RegistroUsuario1(?,?,?,?,?,?,?)}")
 
                 cs.setString(1,usuario.nombre)
                 cs.setString(2,usuario.apellidoPaterno)
                 cs.setString(3,usuario.apellidoMaterno)
-                cs.setInt(4,usuario.codigosexo)
-                cs.setString(5,usuario.dni)
-                cs.setString(6,usuario.contrasena)
-                cs.setString(7,usuario.direccion)
-                cs.setString(8,usuario.telefono)
-                cs.setString(9,usuario.correo)
-                cs.setInt(10,usuario.codigoprovincia)
-                cs.setInt(11,usuario.codigodistrito)
+                cs.setString(4,usuario.dni)
+                cs.setString(5,usuario.contrasena)
+                cs.setString(6,usuario.telefono)
+                cs.setString(7,usuario.correo)
+
+
 
 
                 //Ejecutando sentencia y guardando el resultado en la variable rs
-                val rs: ResultSet = cs.executeQuery()
-                //Recorrer todas las filas del resultado
-                if (rs.next()) {
+                cs.executeUpdate()
 
-                  resultado = true
-                }
+                //Recorrer todas las filas del resultado
+                conexion!!.commit()
+                isSuccessful = true
             }
         } catch (e: SQLException) {
-            resultado = false
+            conexion!!.rollback()
             Log.e(tagExcepcionDB, e.message!!)
         } catch (e: Exception) {
-            resultado = false
+            conexion!!.rollback()
             Log.e(tagExcepcion, e.message!!)
-
+            conexion!!.rollback()
+        } catch (e: ParseException) {
+            Log.e("Error de Parseo: ", e.message!!)
+            conexion!!.rollback()
         }
-        return resultado
-    }
+        return isSuccessful
+}
+
+    override fun autenticarCredenciales(dni: String, contrasena: String): Boolean {
+            var isSuccessful = false
+
+            try {
+                if (conexion == null) {
+                    Log.e(tagErrorDB, messageErrorDB)
+                } else {
+                    // Preparando la sentencia CALL para ejecutar el procedimiento almacenado de inicio de sesión
+                    val cs: CallableStatement = conexion!!.prepareCall("{CALL SP_AutenticarUsuario(?,?)}")
+
+                    cs.setString(1, dni)
+                    cs.setString(2, contrasena)
+
+                    // Ejecutando la sentencia y guardando el resultado en la variable rs
+                    val rs: ResultSet = cs.executeQuery()
+
+                    // Verificando si la autenticación fue exitosa
+                    if (rs.next()) {
+                        val resultadoAutenticacion = rs.getInt("ResultadoAutenticacion")
+                        isSuccessful = resultadoAutenticacion == 1
+                    }
+                }
+            } catch (e: SQLException) {
+                Log.e(tagExcepcionDB, e.message!!)
+            } catch (e: Exception) {
+                Log.e(tagExcepcion, e.message!!)
+            }
+
+            return isSuccessful
+        }
+
+
 }

@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.navigation.fragment.findNavController
 import com.example.proyecto_inventario.R
+import com.example.proyecto_inventario.controlador.ConexionBase.ImplListaDatosDAO
 import com.example.proyecto_inventario.controlador.ConexionBase.conexiobasededatos
 import com.example.proyecto_inventario.controlador.HomeProyect
 import com.example.proyecto_inventario.databinding.FragmentIngresoAlappBinding
@@ -21,6 +22,7 @@ class ingreso_alapp : Fragment(R.layout.fragment_ingreso_alapp) {
 
     lateinit var bindingIngresoalapp: FragmentIngresoAlappBinding
 
+    private val listaDatosDAO = ImplListaDatosDAO()
     val usuarioPredeterminado = "admin"
     val contraseñaPredeterminada = "senati"
 
@@ -57,7 +59,7 @@ class ingreso_alapp : Fragment(R.layout.fragment_ingreso_alapp) {
             val contraseñaIngresada = bindingIngresoalapp.TIETClave.text.toString()
 
             // Verificar las credenciales ingresadas con las predeterminadas
-            if (usuarioIngresado == usuarioPredeterminado && contraseñaIngresada == contraseñaPredeterminada) {
+            if (listaDatosDAO.autenticarCredenciales(usuarioIngresado, contraseñaIngresada)) {
                 val preferencias = requireContext().getSharedPreferences("sesion", Context.MODE_PRIVATE)
                 val editor = preferencias.edit()
                 editor.putBoolean("sesion_iniciada", mantenerSesionSwitch.isChecked)
@@ -66,8 +68,8 @@ class ingreso_alapp : Fragment(R.layout.fragment_ingreso_alapp) {
                 // Credenciales válidas, iniciar sesión
                 startActivity(Intent(requireContext(), HomeProyect::class.java))
             } else {
-                bindingIngresoalapp.TILUsuario.error = "Usuario incorrecto"
-                bindingIngresoalapp.TILClave.error = "Contraseña incorrecto"
+                bindingIngresoalapp.TILUsuario.error = "Usuario o contraseña incorrectos"
+                bindingIngresoalapp.TILClave.error = "Usuario o contraseña incorrectos"
             }
         }
 

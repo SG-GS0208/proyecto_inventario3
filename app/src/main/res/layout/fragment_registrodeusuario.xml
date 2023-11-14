@@ -172,7 +172,7 @@
                 android:layout_marginEnd="10dp"
                 android:layout_marginBottom="5dp"
                 android:background="@drawable/contenedor_background"
-                app:layout_constraintBottom_toTopOf="@id/CL_contenedor_3"
+                app:layout_constraintBottom_toTopOf="@id/CL_contenedor_5"
                 app:layout_constraintTop_toBottomOf="@id/CL_contenedor_1">
 
 
@@ -299,180 +299,6 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/CL_contenedor_3"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="5dp"
-                android:background="@drawable/contenedor_background"
-                app:layout_constraintBottom_toTopOf="@id/CL_contenedor_4"
-                app:layout_constraintTop_toBottomOf="@id/CL_contenedor_2">
-
-
-                <TextView
-                    android:id="@+id/TV_sexo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="14dp"
-                    android:layout_marginBottom="40dp"
-                    android:fontFamily="@font/roboto"
-                    android:text="Sexo:"
-                    android:textColor="@color/letras"
-                    android:textSize="15sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:ignore="RtlHardcoded,UseCompatTextViewDrawableXml" />
-
-                <RadioGroup
-                    android:id="@+id/RG_sexo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginBottom="1dp"
-                    android:orientation="horizontal"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                </RadioGroup>
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/CL_contenedor_4"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="5dp"
-                android:background="@drawable/contenedor_background"
-                app:layout_constraintBottom_toTopOf="@id/CL_contenedor_5"
-                app:layout_constraintTop_toBottomOf="@id/CL_contenedor_3">
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/TIL_provincia"
-                    style="@style/ThemeRegister"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginBottom="5dp"
-                    android:textColorHint="@color/hint"
-                    app:boxBackgroundColor="@color/white"
-                    app:boxBackgroundMode="outline"
-                    app:boxStrokeColor="@color/letras"
-                    app:endIconMode="dropdown_menu"
-                    app:errorEnabled="true"
-                    app:errorIconDrawable="@null"
-                    app:hintAnimationEnabled="true"
-                    app:hintTextColor="@color/letras"
-                    app:layout_constraintBottom_toTopOf="@id/TIL_distrito"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="parent"
-                    app:startIconDrawable="@drawable/ic_province"
-                    app:startIconTint="@color/black">
-
-                    <AutoCompleteTextView
-                        android:id="@+id/ACTV_provincia"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:focusable="false"
-                        android:fontFamily="@font/inter"
-                        android:hint="Provincia"
-                        android:imeOptions="actionNext"
-                        android:inputType="none"
-                        android:textColor="@color/black"
-                        android:textSize="13sp"
-                        android:textStyle="bold" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/TIL_distrito"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:textColorHint="@color/hint"
-                    app:boxBackgroundColor="@color/white"
-                    app:boxBackgroundMode="outline"
-                    app:boxStrokeColor="@color/letras"
-                    app:endIconMode="dropdown_menu"
-                    app:errorEnabled="true"
-                    app:errorIconDrawable="@null"
-                    app:hintAnimationEnabled="true"
-                    app:hintTextColor="@color/letras"
-                    app:layout_constraintBottom_toTopOf="@id/TIL_direccion"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/TIL_provincia"
-                    app:startIconDrawable="@drawable/ic_district"
-                    app:startIconTint="@color/black">
-
-                    <AutoCompleteTextView
-                        android:id="@+id/ACTV_distrito"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:focusable="false"
-                        android:fontFamily="@font/inter"
-                        android:hint="Distrito"
-                        android:imeOptions="actionNext"
-                        android:inputType="none"
-                        android:textColor="@color/black"
-                        android:textSize="13sp"
-                        android:textStyle="bold" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/TIL_direccion"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginBottom="5dp"
-                    android:textColorHint="@color/hint"
-                    app:boxBackgroundColor="@color/white"
-                    app:boxBackgroundMode="outline"
-                    app:boxStrokeColor="@color/letras"
-                    app:endIconMode="custom"
-                    app:errorEnabled="true"
-                    app:errorIconDrawable="@null"
-                    app:hintAnimationEnabled="true"
-                    app:hintTextColor="@color/letras"
-                    app:layout_constraintBottom_toTopOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/TIL_distrito"
-                    app:startIconDrawable="@drawable/ic_reference"
-                    app:startIconTint="@color/black">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/TIET_direccion"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/inter"
-                        android:hint="Direccion"
-                        android:imeOptions="actionNext"
-                        android:inputType="text"
-                        android:singleLine="true"
-                        android:textColor="@color/black"
-                        android:textSize="13sp"
-                        android:textStyle="bold" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/CL_contenedor_5"
@@ -484,7 +310,7 @@
                 android:layout_marginBottom="5dp"
                 android:background="@drawable/contenedor_background"
                 app:layout_constraintBottom_toTopOf="@id/B_registro"
-                app:layout_constraintTop_toBottomOf="@id/CL_contenedor_4">
+                app:layout_constraintTop_toBottomOf="@id/CL_contenedor_2">
 
 
                 <com.google.android.material.textfield.TextInputLayout

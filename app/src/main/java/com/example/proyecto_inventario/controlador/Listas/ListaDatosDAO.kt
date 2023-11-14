@@ -13,5 +13,6 @@ interface ListaDatosDAO {
 
     fun Registrodeusuario(usuario:ClasesDatos.Registrousuario):Boolean
 
+    fun autenticarCredenciales(usuario: String, contrasena: String): Boolean
 
 }
