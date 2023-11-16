@@ -11,6 +11,8 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.navigation.fragment.findNavController
 import com.example.proyecto_inventario.R
+import com.example.proyecto_inventario.controlador.ConexionBase.ImplListaDatosDAO
+import com.example.proyecto_inventario.controlador.ConexionBase.preferencias.preferenciasLogin
 import com.example.proyecto_inventario.controlador.Consultasapp
 import com.example.proyecto_inventario.controlador.HomeProyect
 import com.example.proyecto_inventario.controlador.Inicio_sesion
@@ -20,12 +22,20 @@ import com.example.proyecto_inventario.databinding.FragmentHomeprincipalBinding
 
 class homeprincipal : Fragment(R.layout.fragment_homeprincipal) {
     lateinit var  bindingHomeprincipal: FragmentHomeprincipalBinding
-
+    private lateinit var preferenciasLogin: preferenciasLogin
+    private val clienteDAO = ImplListaDatosDAO()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         bindingHomeprincipal =  FragmentHomeprincipalBinding.bind(view)
+
+
+        val cliente = clienteDAO.obtenerusuarioporid(preferenciasLogin.getUsuario())
+
+        preferenciasLogin.saveIdUsuario(cliente.codigo)
+
+
 
         //de la 27 a 31 me sirve para que el boton de retroceso del celular no funcione
         val onBackPressedCallback = object : OnBackPressedCallback(true) {

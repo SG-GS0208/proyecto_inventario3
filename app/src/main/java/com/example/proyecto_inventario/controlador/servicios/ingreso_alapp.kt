@@ -15,6 +15,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.proyecto_inventario.R
 import com.example.proyecto_inventario.controlador.ConexionBase.ImplListaDatosDAO
 import com.example.proyecto_inventario.controlador.ConexionBase.conexiobasededatos
+import com.example.proyecto_inventario.controlador.ConexionBase.preferencias.preferenciasLogin
 import com.example.proyecto_inventario.controlador.HomeProyect
 import com.example.proyecto_inventario.controlador.modelo.EstadoAutenticacion
 import com.example.proyecto_inventario.databinding.FragmentIngresoAlappBinding
@@ -26,6 +27,8 @@ class ingreso_alapp : Fragment(R.layout.fragment_ingreso_alapp) {
     lateinit var bindingIngresoalapp: FragmentIngresoAlappBinding
     private var mensajeError=""
     private val listaDatosDAO = ImplListaDatosDAO()
+    private lateinit var preferenciasLogin: preferenciasLogin
+
     val usuarioPredeterminado = "admin"
     val contraseñaPredeterminada = "senati"
 
@@ -35,7 +38,7 @@ class ingreso_alapp : Fragment(R.layout.fragment_ingreso_alapp) {
         super.onViewCreated(view, savedInstanceState)
 
         bindingIngresoalapp = FragmentIngresoAlappBinding.bind(view)
-
+        preferenciasLogin = preferenciasLogin(requireContext())
         mantenerSesionSwitch = bindingIngresoalapp.SMantenerSesion
 
 
@@ -68,6 +71,8 @@ class ingreso_alapp : Fragment(R.layout.fragment_ingreso_alapp) {
                     val editor = preferencias.edit()
                     editor.putBoolean("sesion_iniciada", mantenerSesionSwitch.isChecked)
                     editor.apply()
+
+                    preferenciasLogin.saveUsuario(usuarioIngresado)
 
                     // Credenciales válidas, iniciar sesión
                     startActivity(Intent(requireContext(), HomeProyect::class.java))

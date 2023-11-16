@@ -16,4 +16,9 @@ interface ListaDatosDAO {
 
     fun autenticarCredenciales(usuario: String, contrasena: String): EstadoAutenticacion
 
+
+    fun Registrodeproducto(producto:ClasesDatos.Registroproducto):Boolean
+
+    fun obtenerusuarioporid(usuario:String):ClasesDatos.Registrousuario
+
 }

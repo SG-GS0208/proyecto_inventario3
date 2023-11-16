@@ -39,4 +39,17 @@ class ClasesDatos {
     )
 
 
+    data class Registroproducto(
+        var codigo: Int,
+        var nombre: String,
+        var descripcion: String,
+        var cantidad :Int,
+        var marca :String,
+        var modelo:String,
+        var preciou:Double,
+        var preciototal:Double,
+        var codigousuario:Int
+    )
+
+
 }

@@ -190,7 +190,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/TIL_descripcion"
-                    app:layout_constraintBottom_toTopOf="@id/TIL_modelo"
+                    app:layout_constraintBottom_toTopOf="@id/TIL_marca"
                     app:startIconDrawable="@drawable/cajas__3_"
                     app:startIconTint="@color/black">
 
@@ -199,6 +199,45 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Cantidad"
+                        android:imeOptions="actionDone"
+                        android:inputType="text"
+                        android:singleLine="true"
+                        android:textColor="@color/black"
+                        android:textSize="13sp"
+                        android:textStyle="bold"
+                        android:fontFamily="@font/inter" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/TIL_marca"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginEnd="10dp"
+                    android:textColorHint="@color/hint"
+
+                    app:boxBackgroundColor="@color/white"
+                    app:boxBackgroundMode="outline"
+                    app:boxStrokeColor="@color/letras"
+                    app:endIconMode="custom"
+                    app:errorEnabled="true"
+                    app:errorIconDrawable="@null"
+                    app:hintAnimationEnabled="true"
+                    app:hintTextColor="@color/letras"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/TIL_cantidad"
+                    app:layout_constraintBottom_toTopOf="@id/TIL_modelo"
+                    app:startIconDrawable="@drawable/cajas__3_"
+                    app:startIconTint="@color/black">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/TIET_marca"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Marca"
                         android:imeOptions="actionDone"
                         android:inputType="text"
                         android:singleLine="true"
@@ -228,7 +267,7 @@
                     app:hintTextColor="@color/letras"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/TIL_cantidad"
+                    app:layout_constraintTop_toBottomOf="@id/TIL_marca"
                     app:layout_constraintBottom_toTopOf="@id/TIL_precioU"
                     app:startIconDrawable="@drawable/cajas__3_"
                     app:startIconTint="@color/black">

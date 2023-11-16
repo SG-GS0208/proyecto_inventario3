@@ -14,7 +14,7 @@ class ImplListaDatosDAO :ListaDatosDAO{
     private val tagErrorDB = "ERROR_CONEXION_BD"
     private val tagExcepcionDB = "ERROR_EXCEPCION_BD"
     private val tagExcepcion = "ERROR_EXCEPCION"
-    private val messageErrorDB = "No está conectado con la base de datos. Lista Datos"
+    private val messageErrorDB = "No está conectado con la base de datos"
     private val conexion = conexiobasededatos().dbConexion()
     override fun listaprovinciasSpiner(): ArrayList<ClasesDatos.provincia> {
 
@@ -156,6 +156,7 @@ class ImplListaDatosDAO :ListaDatosDAO{
         return isSuccessful
 }
 
+
     override fun autenticarCredenciales(dni: String, contrasena: String): EstadoAutenticacion {
 
             try {
@@ -198,6 +199,91 @@ class ImplListaDatosDAO :ListaDatosDAO{
 
 
         }
+
+    override fun Registrodeproducto(producto: ClasesDatos.Registroproducto): Boolean {
+        var isSuccessful = false
+        try{
+            if (conexion == null){
+
+                Log.e(tagErrorDB,messageErrorDB)
+            }else{
+                //Preparando Sentencia Call para ejecutar el Procedimiento Almacenado
+                val cs: CallableStatement = conexion!!.prepareCall("{CALL SP_RegistroProducto(?,?,?,?,?,?,?,?)}")
+
+                cs.setString(1,producto.nombre)
+                cs.setString(2,producto.descripcion)
+                cs.setInt(3,producto.cantidad)
+                cs.setString(4,producto.marca)
+                cs.setString(5,producto.modelo)
+                cs.setDouble(6,producto.preciou)
+                cs.setDouble(7,producto.preciototal)
+                cs.setInt(8,producto.codigousuario)
+                //Ejecutando sentencia y guardando el resultado en la variable rs
+                cs.executeUpdate()
+
+                //Recorrer todas las filas del resultado
+                conexion!!.commit()
+                isSuccessful = true
+            }
+        } catch (e: SQLException) {
+            conexion!!.rollback()
+            Log.e(tagExcepcionDB, e.message!!)
+        } catch (e: Exception) {
+            conexion!!.rollback()
+            Log.e(tagExcepcion, e.message!!)
+            conexion!!.rollback()
+        } catch (e: ParseException) {
+            Log.e("Error de Parseo: ", e.message!!)
+            conexion!!.rollback()
+        }
+        return isSuccessful
+    }
+
+    override fun obtenerusuarioporid(usuario: String):ClasesDatos.Registrousuario {
+       try {
+           if(conexion == null){
+               Log.e(tagErrorDB,messageErrorDB)
+           }
+           else{
+               val cs:CallableStatement = conexion!!.prepareCall("{CALL SP_AutenticarUsuario(?)}")
+               cs.setString(1,usuario)
+
+               //Ejecutando procedimiento almacenado y guardando el resultado
+               val rs: ResultSet = cs.executeQuery()
+               // Comprobando si recorre una fila con el resultado de la ejecución del SP
+               if (rs.next()) {
+                   return ClasesDatos.Registrousuario(
+                       codigo = rs.getInt("codigo_usuario"),
+                       nombre =rs.getString("nombre"),
+                       apellidoPaterno = rs.getString("ape_paterno"),
+                       apellidoMaterno = rs.getString("ape_materno"),
+                       dni =rs.getString("dni"),
+                       contrasena="",
+                       telefono = rs.getString("telefono"),
+                       correo = rs.getString("correo")
+                   )
+
+               }
+           }
+       } catch (e: SQLException) {
+           Log.e(tagExcepcionDB, e.message!!)
+       } catch (e: Exception) {
+           Log.e(tagExcepcion, e.message!!)
+       } finally {
+           /**conexion!!.close()*/
+       }
+        return ClasesDatos.Registrousuario(
+            codigo = 0,
+            nombre ="",
+            apellidoPaterno = "",
+            apellidoMaterno = "",
+            dni ="",
+            contrasena="",
+            telefono = "",
+            correo = ""
+        )
+
+    }
 
     private fun validarcontrasena(contrasena: String,encriptado:String): Boolean{
         return BCrypt.checkpw(contrasena,encriptado)
