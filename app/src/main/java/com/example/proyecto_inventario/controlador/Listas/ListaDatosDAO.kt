@@ -1,6 +1,7 @@
 package com.example.proyecto_inventario.controlador.Listas
 
 import com.example.proyecto_inventario.controlador.clasedatos.ClasesDatos
+import com.example.proyecto_inventario.controlador.modelo.EstadoAutenticacion
 
 interface ListaDatosDAO {
 
@@ -13,6 +14,6 @@ interface ListaDatosDAO {
 
     fun Registrodeusuario(usuario:ClasesDatos.Registrousuario):Boolean
 
-    fun autenticarCredenciales(usuario: String, contrasena: String): Boolean
+    fun autenticarCredenciales(usuario: String, contrasena: String): EstadoAutenticacion
 
 }

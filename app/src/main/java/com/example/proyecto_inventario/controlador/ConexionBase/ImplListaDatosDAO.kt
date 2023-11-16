@@ -5,7 +5,9 @@ import java.sql.CallableStatement
 import java.sql.ResultSet
 import java.sql.SQLException
 import android.util.Log
+import org.mindrot.jbcrypt.BCrypt
 import com.example.proyecto_inventario.controlador.clasedatos.ClasesDatos
+import com.example.proyecto_inventario.controlador.modelo.EstadoAutenticacion
 import java.text.ParseException
 
 class ImplListaDatosDAO :ListaDatosDAO{
@@ -154,36 +156,52 @@ class ImplListaDatosDAO :ListaDatosDAO{
         return isSuccessful
 }
 
-    override fun autenticarCredenciales(dni: String, contrasena: String): Boolean {
-            var isSuccessful = false
+    override fun autenticarCredenciales(dni: String, contrasena: String): EstadoAutenticacion {
 
             try {
-                if (conexion == null) {
+                return if (conexion == null) {
                     Log.e(tagErrorDB, messageErrorDB)
-                } else {
+                    return EstadoAutenticacion.CONEXION_FALLIDA
+                }
+                else {
                     // Preparando la sentencia CALL para ejecutar el procedimiento almacenado de inicio de sesión
-                    val cs: CallableStatement = conexion!!.prepareCall("{CALL SP_AutenticarUsuario(?,?)}")
+                    val cs: CallableStatement = conexion!!.prepareCall("{CALL SP_AutenticarUsuario(?)}")
 
                     cs.setString(1, dni)
-                    cs.setString(2, contrasena)
+
 
                     // Ejecutando la sentencia y guardando el resultado en la variable rs
                     val rs: ResultSet = cs.executeQuery()
 
                     // Verificando si la autenticación fue exitosa
                     if (rs.next()) {
-                        val resultadoAutenticacion = rs.getInt("ResultadoAutenticacion")
-                        isSuccessful = resultadoAutenticacion == 1
+
+                        if(validarcontrasena(contrasena,rs.getString("contrasena"))){
+                            EstadoAutenticacion.ACCESO_EXITOSO
+                        }
+                        else{
+                            EstadoAutenticacion.CLAVE_INCORRECTA
+                        }
+
+                    }else{
+                        EstadoAutenticacion.USUARIO_INCORRECTO
                     }
                 }
             } catch (e: SQLException) {
                 Log.e(tagExcepcionDB, e.message!!)
+                return EstadoAutenticacion.CONEXION_FALLIDA
             } catch (e: Exception) {
                 Log.e(tagExcepcion, e.message!!)
+                return EstadoAutenticacion.CONEXION_FALLIDA
+
             }
 
-            return isSuccessful
+
         }
+
+    private fun validarcontrasena(contrasena: String,encriptado:String): Boolean{
+        return BCrypt.checkpw(contrasena,encriptado)
+    }
 
 
 }

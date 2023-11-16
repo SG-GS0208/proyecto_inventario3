@@ -49,43 +49,27 @@ class Registrodeusuario : Fragment(R.layout.fragment_registrodeusuario) {
 
 
         bindingRegistrodeusuario.BRegistro.setOnClickListener {
-            registrarusuarios()
+            val nombres = bindingRegistrodeusuario.TIETNombres.text.toString()
+            val apellidoPaterno = bindingRegistrodeusuario.TIETApellidoPaterno.text.toString()
+            val dni = bindingRegistrodeusuario.TIETNumeroDocumentoIdentidad.text.toString()
+            val clave = bindingRegistrodeusuario.TIETClave.text.toString()
+            val telefono = bindingRegistrodeusuario.TIETTelefono.text.toString()
+            val correo = bindingRegistrodeusuario.TIETCorreo.text.toString()
 
+            if (nombres.isNotEmpty() || apellidoPaterno.isNotEmpty() || dni.isNotEmpty() || clave.isNotEmpty() || telefono.isNotEmpty() || correo.isNotEmpty()) {
+                if (registrarusuarios()) {
+                    findNavController().navigate(R.id.action_registrodeusuario2_to_ingreso_alapp)
+                    // Si la función registrarusuarios() devuelve true (registro exitoso), muestra un Toast de éxito
+                    Toast.makeText(requireContext(), "REGISTRADO CON ÉXITO", Toast.LENGTH_SHORT).show()
+                }
+            }
+            else {
+                // Si la función registrarusuarios() devuelve false (registro no exitoso), muestra un Toast de error
+                Toast.makeText(requireContext(), "ERROR AL REGISTRAR", Toast.LENGTH_SHORT).show()
+            }
 
         }
 
-
-
-       /* val radioGroup = view.findViewById<RadioGroup>(R.id.RG_sexo)
-        val sexoArrayList = listaDatosDAO.RGsexo()
-
-
-        for (sexo in sexoArrayList) {
-            val radioButton = RadioButton(requireContext())
-            radioButton.text = sexo.descripcion
-            radioButton.id = View.generateViewId() // Generar un nuevo ID único para cada RadioButton
-            radioButton.tag = sexo.descripcion
-
-            // Agregar el RadioButton al RadioGroup
-            radioGroup.addView(radioButton)
-
-            val layoutParams = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-            )
-            radioGroup.gravity = Gravity.CENTER_HORIZONTAL
-            radioButton.layoutParams = layoutParams
-        }
-        val radioButtonId = radioGroup.checkedRadioButtonId
-
-        if (radioButtonId != -1) {
-            val radioButton = view.findViewById<RadioButton>(radioButtonId)
-            val descripcionSexoSeleccionado = radioButton.tag as? String ?: ""
-            // Ahora puedes usar 'descripcionSexoSeleccionado' como String en tu código de registro
-        } else {
-            // Manejar el caso en que no se ha seleccionado ningún RadioButton
-        }
-*/
 
     }
 
@@ -94,46 +78,22 @@ class Registrodeusuario : Fragment(R.layout.fragment_registrodeusuario) {
         return BCrypt.hashpw(password, salt)
     }
     private fun registrarusuarios():Boolean{
-
+        var clavecifrada= encryptPassword(bindingRegistrodeusuario.TIETClave.text.toString())
         val datosusuario = ClasesDatos.Registrousuario(
             codigo =0,
             nombre =bindingRegistrodeusuario.TIETNombres.text.toString(),
             apellidoPaterno = bindingRegistrodeusuario.TIETApellidoPaterno.text.toString(),
             apellidoMaterno = bindingRegistrodeusuario.TIETApellidoMaterno.text.toString(),
             dni = bindingRegistrodeusuario.TIETNumeroDocumentoIdentidad.text.toString(),
-            contrasena= bindingRegistrodeusuario.TIETClave.text.toString(),
+            contrasena= clavecifrada,
             telefono =bindingRegistrodeusuario.TIETTelefono.text.toString(),
             correo = bindingRegistrodeusuario.TIETCorreo.text.toString()
         )
         return listaDatosDAO.Registrodeusuario(datosusuario)
+
     }
-   /* private fun cargarDatosprovincia() {
 
-        val listaprovincias = listaDatosDAO.listaprovinciasSpiner()
 
-        val autoCompleteTextView = bindingRegistrodeusuario.ACTVProvincia // Ajusta el ID según tu diseño
-
-        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, listaprovincias)
-        autoCompleteTextView.setAdapter(adapter)
-
-        autoCompleteTextView.setOnItemClickListener { _, _, position, _ ->
-            provincia = adapter.getItem(position) as ClasesDatos.provincia
-            // Puedes realizar acciones con la provincia seleccionada si es necesario
-        }
-    }
-    private fun cargarDatosdistrito() {
-        val listadistrito = listaDatosDAO.listadistritoSpiner()
-
-        val autoCompleteTextView = bindingRegistrodeusuario.ACTVDistrito // Ajusta el ID según tu diseño
-
-        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, listadistrito)
-        autoCompleteTextView.setAdapter(adapter)
-
-        autoCompleteTextView.setOnItemClickListener { _, _, position, _ ->
-            distrito = adapter.getItem(position) as ClasesDatos.distrito
-            // Puedes realizar acciones con la provincia seleccionada si es necesario
-        }
-    }*/
     private fun mensajeCancelarRegistro() {
         val builder = AlertDialog.Builder(requireContext())
 
@@ -154,15 +114,4 @@ class Registrodeusuario : Fragment(R.layout.fragment_registrodeusuario) {
 
         builder.show()
     }
-
-   /* companion object{
-        private lateinit var sexo: ClasesDatos.sexo
-        private lateinit var provincia: ClasesDatos.provincia
-        private lateinit var distrito: ClasesDatos.distrito
-    }*/
-
-
-
-
-
 }

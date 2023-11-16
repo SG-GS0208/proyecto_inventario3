@@ -2,6 +2,7 @@ package com.example.proyecto_inventario.controlador.servicios
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -15,13 +16,15 @@ import com.example.proyecto_inventario.R
 import com.example.proyecto_inventario.controlador.ConexionBase.ImplListaDatosDAO
 import com.example.proyecto_inventario.controlador.ConexionBase.conexiobasededatos
 import com.example.proyecto_inventario.controlador.HomeProyect
+import com.example.proyecto_inventario.controlador.modelo.EstadoAutenticacion
 import com.example.proyecto_inventario.databinding.FragmentIngresoAlappBinding
+import com.google.android.material.snackbar.Snackbar
 
 
 class ingreso_alapp : Fragment(R.layout.fragment_ingreso_alapp) {
 
     lateinit var bindingIngresoalapp: FragmentIngresoAlappBinding
-
+    private var mensajeError=""
     private val listaDatosDAO = ImplListaDatosDAO()
     val usuarioPredeterminado = "admin"
     val contraseñaPredeterminada = "senati"
@@ -44,8 +47,6 @@ class ingreso_alapp : Fragment(R.layout.fragment_ingreso_alapp) {
         }
 
 
-
-
         //ejemplo
         bindingIngresoalapp.TVTitulo.setOnClickListener {
             showConnectionStatusToast()
@@ -59,17 +60,36 @@ class ingreso_alapp : Fragment(R.layout.fragment_ingreso_alapp) {
             val contraseñaIngresada = bindingIngresoalapp.TIETClave.text.toString()
 
             // Verificar las credenciales ingresadas con las predeterminadas
-            if (listaDatosDAO.autenticarCredenciales(usuarioIngresado, contraseñaIngresada)) {
-                val preferencias = requireContext().getSharedPreferences("sesion", Context.MODE_PRIVATE)
-                val editor = preferencias.edit()
-                editor.putBoolean("sesion_iniciada", mantenerSesionSwitch.isChecked)
-                editor.apply()
+            when (listaDatosDAO.autenticarCredenciales(usuarioIngresado, contraseñaIngresada)) {
 
-                // Credenciales válidas, iniciar sesión
-                startActivity(Intent(requireContext(), HomeProyect::class.java))
-            } else {
-                bindingIngresoalapp.TILUsuario.error = "Usuario o contraseña incorrectos"
-                bindingIngresoalapp.TILClave.error = "Usuario o contraseña incorrectos"
+                EstadoAutenticacion.ACCESO_EXITOSO -> {
+                    val preferencias =
+                        requireContext().getSharedPreferences("sesion", Context.MODE_PRIVATE)
+                    val editor = preferencias.edit()
+                    editor.putBoolean("sesion_iniciada", mantenerSesionSwitch.isChecked)
+                    editor.apply()
+
+                    // Credenciales válidas, iniciar sesión
+                    startActivity(Intent(requireContext(), HomeProyect::class.java))
+                }
+
+                EstadoAutenticacion.CLAVE_INCORRECTA -> {
+                    mensajeError = "La cotraseña es incorrecta"
+                    mostrarMensajeError(view,mensajeError)
+
+                }
+
+                EstadoAutenticacion.USUARIO_INCORRECTO ->{
+                    mensajeError = "El usuario es incorrecto"
+                    mostrarMensajeError(view , mensajeError)
+                }
+
+                EstadoAutenticacion.CONEXION_FALLIDA -> {
+                    mensajeError = "Errore de conexion"
+                    mostrarMensajeError(view , mensajeError)
+
+                }
+
             }
         }
 
@@ -78,8 +98,10 @@ class ingreso_alapp : Fragment(R.layout.fragment_ingreso_alapp) {
                 // No hacer nada aquí para evitar acciones al presionar el botón "Atrás"
             }
         }
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, onBackPressedCallback)
-
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            onBackPressedCallback
+        )
 
 
     }
@@ -87,10 +109,24 @@ class ingreso_alapp : Fragment(R.layout.fragment_ingreso_alapp) {
     fun showConnectionStatusToast() {
         val connection = conexiobasededatos().dbConexion()
         if (connection != null) {
-            Toast.makeText(requireContext(), "Conectado a la base de datos", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Conectado a la base de datos", Toast.LENGTH_SHORT)
+                .show()
         } else {
-            Toast.makeText(requireContext(), "No conectado a la base de datos", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "No conectado a la base de datos", Toast.LENGTH_SHORT)
+                .show()
         }
     }
 
-}
+    private fun mostrarMensajeError(view: View, mensaje: String) {
+        Snackbar.make(view, mensaje, Snackbar.LENGTH_LONG)
+            .setBackgroundTint(Color.rgb(170, 0, 0))
+            .setTextColor(Color.WHITE)
+            .setDuration(1000)
+            .setAction("Action", null)
+            .show()
+    }
+
+
+
+    }
+
