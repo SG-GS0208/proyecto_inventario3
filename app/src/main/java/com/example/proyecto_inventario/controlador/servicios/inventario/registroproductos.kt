@@ -16,6 +16,7 @@ import com.example.proyecto_inventario.R
 import com.example.proyecto_inventario.controlador.ConexionBase.ImplListaDatosDAO
 import com.example.proyecto_inventario.controlador.ConexionBase.preferencias.preferenciasLogin
 import com.example.proyecto_inventario.controlador.HomeProyect
+import com.example.proyecto_inventario.controlador.Inicio_sesion
 import com.example.proyecto_inventario.controlador.Productosapp
 import com.example.proyecto_inventario.controlador.clasedatos.ClasesDatos
 import com.example.proyecto_inventario.databinding.FragmentRegistroproductosBinding
@@ -36,14 +37,35 @@ class registroproductos : Fragment(R.layout.fragment_registroproductos) {
             mensajeCancelarProducto()
         }
 
-        bindingRegistroproductos.BRegistro.setOnClickListener{
-            if(registrarproducto()){
-                Toast.makeText(requireContext(), "producto registrado", Toast.LENGTH_SHORT).show()
-            }else{
-                Toast.makeText(requireContext(), "producto no registrado", Toast.LENGTH_SHORT).show()
-            }
+        bindingRegistroproductos.BRegistro.setOnClickListener {
+            val nombre = bindingRegistroproductos.TIETProducto.text.toString()
+            val descripcion = bindingRegistroproductos.TIETDescripcion.text.toString()
+            val marca = bindingRegistroproductos.TIETMarca.text.toString()
+            val modelo = bindingRegistroproductos.TIETModelo.text.toString()
 
+            val cantidadText = bindingRegistroproductos.TIETCantidad.text.toString()
+            val precioText = bindingRegistroproductos.TIETPrecioU.text.toString()
+
+            if (nombre.isNotEmpty() && descripcion.isNotEmpty() && marca.isNotEmpty() && modelo.isNotEmpty() && cantidadText.isNotEmpty() && precioText.isNotEmpty()) {
+                try {
+                    // Intenta convertir la cantidad y precio a sus respectivos tipos
+
+
+                    if (registrarproducto()) {
+                        startActivity(Intent(requireContext(), HomeProyect::class.java))
+                        Toast.makeText(requireContext(), "REGISTRADO CON ÉXITO", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(requireContext(), "ERROR AL REGISTRAR", Toast.LENGTH_SHORT).show()
+                    }
+                } catch (e: NumberFormatException) {
+                    // Si hay un error al convertir a entero o double, muestra un mensaje de error
+                    Toast.makeText(requireContext(), "Error en formato de cantidad o precio", Toast.LENGTH_SHORT).show()
+                }
+            } else {
+                Toast.makeText(requireContext(), "Todos los campos deben estar llenos", Toast.LENGTH_SHORT).show()
+            }
         }
+
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
             mensajeCancelarProducto()
         }

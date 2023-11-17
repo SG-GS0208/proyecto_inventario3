@@ -30,6 +30,7 @@ class homeprincipal : Fragment(R.layout.fragment_homeprincipal) {
 
         bindingHomeprincipal =  FragmentHomeprincipalBinding.bind(view)
 
+        preferenciasLogin = preferenciasLogin(requireContext())
 
         val cliente = clienteDAO.obtenerusuarioporid(preferenciasLogin.getUsuario())
 
