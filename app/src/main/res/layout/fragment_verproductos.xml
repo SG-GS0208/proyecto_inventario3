@@ -6,62 +6,270 @@
     android:layout_width="match_parent"
     android:orientation="horizontal"
     android:layout_height="match_parent"
-
+    android:background="@drawable/background_fondover"
     tools:context=".controlador.servicios.productos.verproductos">
+
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/tituloprincipal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:gravity="center"
+        android:textSize="20dp"
+        android:text="Lista de Productos Generales Registrados en la Empresa"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/tablageneral"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/tablageneral"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/tituloprincipal"
+        app:layout_constraintBottom_toTopOf="@id/tituloprivado">
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
     <TableLayout
         android:id="@+id/tableLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <!-- Fila 1 -->
-        <TableRow>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Columna 1" />
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:text="Nombre"
+                android:textSize="16sp"
+                android:gravity="center"
+                android:layout_width="100dp"
+                android:textColor="@color/black"
+
+                android:background="@drawable/background_bordestablanara"
                 android:layout_height="wrap_content"
-                android:text="Columna 2" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Columna 1" />
+                android:textStyle="bold" />
 
             <TextView
-                android:layout_width="wrap_content"
+                android:text="Descripción"
+                android:textSize="16sp"
+                android:gravity="center"
+                android:layout_width="230dp"
+                android:background="@drawable/background_bordestabla"
+                android:textColor="@color/black"
+
                 android:layout_height="wrap_content"
-                android:text="Columna 2" />
+                android:textStyle="bold" />
 
+            <TextView
+                android:text="Cantidad"
+                android:textSize="16sp"
+                android:gravity="center"
+                android:layout_width="70dp"
+                android:background="@drawable/background_bordestabla"
+                android:textColor="@color/black"
+                android:layout_height="wrap_content"
+                android:textStyle="bold" />
 
-            <!-- Agrega más columnas según sea necesario -->
+            <TextView
+                android:text="Marca"
+                android:textSize="16sp"
+                android:gravity="center"
+                android:layout_width="100dp"
+                android:background="@drawable/background_bordestabla"
+                android:textColor="@color/black"
+                android:layout_height="wrap_content"
+                android:textStyle="bold" />
+
+            <TextView
+                android:text="Modelo"
+                android:textSize="16sp"
+                android:gravity="center"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/background_bordestabla"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+            <TextView
+                android:text="Precio U."
+                android:textSize="16sp"
+                android:gravity="center"
+                android:layout_width="100dp"
+                android:textColor="@color/black"
+                android:background="@drawable/background_bordestabla"
+                android:layout_height="wrap_content"
+                android:textStyle="bold" />
+
+            <TextView
+                android:text="Precio Total"
+                android:textSize="16sp"
+                android:gravity="center"
+                android:layout_width="100dp"
+                android:textColor="@color/black"
+                android:background="@drawable/background_bordestabla"
+                android:layout_height="wrap_content"
+                android:textStyle="bold" />
 
         </TableRow>
-
-        <!-- Fila 2 -->
-        <TableRow>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Dato 1-1" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Dato 1-2" />
-
-            <!-- Agrega más datos según sea necesario -->
-
-        </TableRow>
-
-        <!-- Fila 3 y más filas según sea necesario -->
 
     </TableLayout>
+    </HorizontalScrollView>
 
+    </androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:id="@+id/tituloprivado"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:gravity="center"
+                    android:textSize="20dp"
+                    android:text="Lista de Productos  Registrados por el Empleado"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toTopOf="@id/tablaproductousuario"
+                    app:layout_constraintTop_toBottomOf="@id/tablageneral"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/tablaproductousuario"
+        android:layout_width="match_parent"
+
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/tituloprivado">
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <TableLayout
+                android:id="@+id/tableLayoutusu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:text="Nombre"
+                        android:textSize="16sp"
+                        android:gravity="center"
+                        android:layout_width="100dp"
+                        android:textColor="@color/black"
+                        android:background="@drawable/background_bordestabla"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:text="Descripción"
+                        android:textSize="16sp"
+                        android:gravity="center"
+                        android:layout_width="230dp"
+                        android:background="@drawable/background_bordestabla"
+                        android:textColor="@color/black"
+
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:text="Cantidad"
+                        android:textSize="16sp"
+                        android:gravity="center"
+                        android:layout_width="70dp"
+                        android:background="@drawable/background_bordestabla"
+                        android:textColor="@color/black"
+
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:text="Marca"
+                        android:textSize="16sp"
+                        android:gravity="center"
+                        android:layout_width="100dp"
+                        android:background="@drawable/background_bordestabla"
+                        android:textColor="@color/black"
+
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:text="Modelo"
+                        android:textSize="16sp"
+                        android:gravity="center"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/background_bordestabla"
+                        android:textColor="@color/black"
+
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:text="Precio U."
+                        android:textSize="16sp"
+                        android:gravity="center"
+                        android:layout_width="100dp"
+                        android:textColor="@color/black"
+
+                        android:background="@drawable/background_bordestabla"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:text="Precio Total"
+                        android:textSize="16sp"
+                        android:gravity="center"
+                        android:layout_width="100dp"
+                        android:textColor="@color/black"
+
+                        android:background="@drawable/background_bordestabla"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold" />
+
+                </TableRow>
+
+            </TableLayout>
+        </HorizontalScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

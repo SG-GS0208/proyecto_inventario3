@@ -21,4 +21,7 @@ interface ListaDatosDAO {
 
     fun obtenerusuarioporid(usuario:String):ClasesDatos.Registrousuario
 
+    fun tablaproducto():ArrayList<ClasesDatos.Verproducto>
+    fun tablaproductoporusuario(idusuario:Int):ArrayList<ClasesDatos.VerproductoPorusuario>
+
 }

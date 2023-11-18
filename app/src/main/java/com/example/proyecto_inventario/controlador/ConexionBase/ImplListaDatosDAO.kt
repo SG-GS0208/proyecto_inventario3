@@ -285,6 +285,82 @@ class ImplListaDatosDAO :ListaDatosDAO{
 
     }
 
+    override fun tablaproducto(): ArrayList<ClasesDatos.Verproducto> {
+        val tablaproductoArrayList = ArrayList<ClasesDatos.Verproducto>()
+
+        try{
+            if(conexion == null){
+                Log.e(tagErrorDB,messageErrorDB)
+            }else{
+                //Preparando Sentencia Call para ejecutar el Procedimiento Almacenado
+                val cs: CallableStatement = conexion!!.prepareCall("{CALL sp_MostrarProductos}")
+
+                //Ejecutando sentencia y guardando el resultado en la variable rs
+                val rs: ResultSet = cs.executeQuery()
+                //Recorrer todas las filas del resultado
+                while (rs.next()) {
+
+                    val nombre = rs.getString("nombre_producto")
+                    val descripcion = rs.getString("descripcion")
+                    val cantidad = rs.getInt("cantidad")
+                    val marca = rs.getString("marca")
+                    val modelo = rs.getString("modelo")
+                    val preciou = rs.getDouble("preciou")
+                    val preciototal = rs.getDouble("preciototal")
+
+                    val tablaproducto = ClasesDatos.Verproducto(nombre,descripcion,cantidad,marca,modelo,preciou,preciototal)
+                    //Agregamos la variable tipoDocumentoIdentidad al array list.
+                    tablaproductoArrayList.add(tablaproducto)
+                }
+            }
+        } catch (e: SQLException) {
+            Log.e(tagExcepcionDB, e.message!!)
+        } catch (e: Exception) {
+            Log.e(tagExcepcion, e.message!!)
+
+        }
+        return tablaproductoArrayList
+    }
+
+    override fun tablaproductoporusuario(idusuario:Int): ArrayList<ClasesDatos.VerproductoPorusuario> {
+        val tablaproductoporusuarioArrayList = ArrayList<ClasesDatos.VerproductoPorusuario>()
+
+        try{
+            if(conexion == null){
+                Log.e(tagErrorDB,messageErrorDB)
+            }else{
+                //Preparando Sentencia Call para ejecutar el Procedimiento Almacenado
+                val cs: CallableStatement = conexion!!.prepareCall("{CALL sp_MostrarProductosPorClienteEJE(?)}")
+
+                cs.setInt(1, idusuario)
+
+                //Ejecutando sentencia y guardando el resultado en la variable rs
+                val rs: ResultSet = cs.executeQuery()
+                //Recorrer todas las filas del resultado
+                while (rs.next()) {
+
+                    val nombre = rs.getString("nombre_producto")
+                    val descripcion = rs.getString("descripcion")
+                    val cantidad = rs.getInt("cantidad")
+                    val marca = rs.getString("marca")
+                    val modelo = rs.getString("modelo")
+                    val preciou = rs.getDouble("preciou")
+                    val preciototal = rs.getDouble("preciototal")
+
+                    val tablaproductoporusuario = ClasesDatos.VerproductoPorusuario(nombre,descripcion,cantidad,marca,modelo,preciou,preciototal)
+                    //Agregamos la variable tipoDocumentoIdentidad al array list.
+                    tablaproductoporusuarioArrayList.add(tablaproductoporusuario)
+                }
+            }
+        } catch (e: SQLException) {
+            Log.e(tagExcepcionDB, e.message!!)
+        } catch (e: Exception) {
+            Log.e(tagExcepcion, e.message!!)
+
+        }
+        return tablaproductoporusuarioArrayList
+    }
+
     private fun validarcontrasena(contrasena: String,encriptado:String): Boolean{
         return BCrypt.checkpw(contrasena,encriptado)
     }

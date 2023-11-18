@@ -51,5 +51,27 @@ class ClasesDatos {
         var codigousuario:Int
     )
 
+    data class Verproducto(
+        var nombre: String,
+        var descripcion: String,
+        var cantidad :Int,
+        var marca :String,
+        var modelo:String,
+        var preciou:Double,
+        var preciototal:Double
+    )
+
+    data class VerproductoPorusuario(
+        var nombre: String,
+        var descripcion: String,
+        var cantidad :Int,
+        var marca :String,
+        var modelo:String,
+        var preciou:Double,
+        var preciototal:Double
+    )
+
+
+
 
 }
