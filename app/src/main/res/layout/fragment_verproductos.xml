@@ -6,7 +6,6 @@
     android:layout_width="match_parent"
     android:orientation="horizontal"
     android:layout_height="match_parent"
-    android:background="@drawable/background_fondover"
     tools:context=".controlador.servicios.productos.verproductos">
 
 
@@ -24,9 +23,11 @@
         android:id="@+id/tituloprincipal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/white"
+        android:textColor="@color/letras"
         android:gravity="center"
+        android:fontFamily="@font/amiri"
         android:textSize="20dp"
+        android:textStyle="bold"
         android:text="Lista de Productos Generales Registrados en la Empresa"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/tablageneral"
@@ -69,8 +70,7 @@
                 android:textSize="16sp"
                 android:gravity="center"
                 android:layout_width="100dp"
-                android:textColor="@color/black"
-
+                android:textColor="@color/white"
                 android:background="@drawable/background_bordestablanara"
                 android:layout_height="wrap_content"
                 android:textStyle="bold" />
@@ -80,8 +80,8 @@
                 android:textSize="16sp"
                 android:gravity="center"
                 android:layout_width="230dp"
-                android:background="@drawable/background_bordestabla"
-                android:textColor="@color/black"
+                android:background="@drawable/background_bordestablanara"
+                android:textColor="@color/white"
 
                 android:layout_height="wrap_content"
                 android:textStyle="bold" />
@@ -90,9 +90,9 @@
                 android:text="Cantidad"
                 android:textSize="16sp"
                 android:gravity="center"
-                android:layout_width="70dp"
-                android:background="@drawable/background_bordestabla"
-                android:textColor="@color/black"
+                android:layout_width="100dp"
+                android:background="@drawable/background_bordestablanara"
+                android:textColor="@color/white"
                 android:layout_height="wrap_content"
                 android:textStyle="bold" />
 
@@ -101,8 +101,8 @@
                 android:textSize="16sp"
                 android:gravity="center"
                 android:layout_width="100dp"
-                android:background="@drawable/background_bordestabla"
-                android:textColor="@color/black"
+                android:background="@drawable/background_bordestablanara"
+                android:textColor="@color/white"
                 android:layout_height="wrap_content"
                 android:textStyle="bold" />
 
@@ -112,8 +112,8 @@
                 android:gravity="center"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:background="@drawable/background_bordestabla"
-                android:textColor="@color/black"
+                android:background="@drawable/background_bordestablanara"
+                android:textColor="@color/white"
                 android:textStyle="bold" />
 
             <TextView
@@ -121,8 +121,8 @@
                 android:textSize="16sp"
                 android:gravity="center"
                 android:layout_width="100dp"
-                android:textColor="@color/black"
-                android:background="@drawable/background_bordestabla"
+                android:textColor="@color/white"
+                android:background="@drawable/background_bordestablanara"
                 android:layout_height="wrap_content"
                 android:textStyle="bold" />
 
@@ -130,9 +130,9 @@
                 android:text="Precio Total"
                 android:textSize="16sp"
                 android:gravity="center"
-                android:layout_width="100dp"
-                android:textColor="@color/black"
-                android:background="@drawable/background_bordestabla"
+                android:layout_width="110dp"
+                android:textColor="@color/white"
+                android:background="@drawable/background_bordestablanara"
                 android:layout_height="wrap_content"
                 android:textStyle="bold" />
 
@@ -146,9 +146,11 @@
                     android:id="@+id/tituloprivado"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/white"
+                    android:textColor="@color/letras"
                     android:gravity="center"
                     android:textSize="20dp"
+                    android:fontFamily="@font/amiri"
+                    android:textStyle="bold"
                     android:text="Lista de Productos  Registrados por el Empleado"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toTopOf="@id/tablaproductousuario"
@@ -191,8 +193,8 @@
                         android:textSize="16sp"
                         android:gravity="center"
                         android:layout_width="100dp"
-                        android:textColor="@color/black"
-                        android:background="@drawable/background_bordestabla"
+                        android:textColor="@color/white"
+                        android:background="@drawable/background_bordestablanara"
                         android:layout_height="wrap_content"
                         android:textStyle="bold" />
 
@@ -201,8 +203,8 @@
                         android:textSize="16sp"
                         android:gravity="center"
                         android:layout_width="230dp"
-                        android:background="@drawable/background_bordestabla"
-                        android:textColor="@color/black"
+                        android:background="@drawable/background_bordestablanara"
+                        android:textColor="@color/white"
 
                         android:layout_height="wrap_content"
                         android:textStyle="bold" />
@@ -211,9 +213,9 @@
                         android:text="Cantidad"
                         android:textSize="16sp"
                         android:gravity="center"
-                        android:layout_width="70dp"
-                        android:background="@drawable/background_bordestabla"
-                        android:textColor="@color/black"
+                        android:layout_width="100dp"
+                        android:background="@drawable/background_bordestablanara"
+                        android:textColor="@color/white"
 
                         android:layout_height="wrap_content"
                         android:textStyle="bold" />
@@ -223,8 +225,8 @@
                         android:textSize="16sp"
                         android:gravity="center"
                         android:layout_width="100dp"
-                        android:background="@drawable/background_bordestabla"
-                        android:textColor="@color/black"
+                        android:background="@drawable/background_bordestablanara"
+                        android:textColor="@color/white"
 
                         android:layout_height="wrap_content"
                         android:textStyle="bold" />
@@ -235,8 +237,8 @@
                         android:gravity="center"
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/background_bordestabla"
-                        android:textColor="@color/black"
+                        android:background="@drawable/background_bordestablanara"
+                        android:textColor="@color/white"
 
                         android:textStyle="bold" />
 
@@ -245,9 +247,9 @@
                         android:textSize="16sp"
                         android:gravity="center"
                         android:layout_width="100dp"
-                        android:textColor="@color/black"
+                        android:textColor="@color/white"
 
-                        android:background="@drawable/background_bordestabla"
+                        android:background="@drawable/background_bordestablanara"
                         android:layout_height="wrap_content"
                         android:textStyle="bold" />
 
@@ -255,10 +257,10 @@
                         android:text="Precio Total"
                         android:textSize="16sp"
                         android:gravity="center"
-                        android:layout_width="100dp"
-                        android:textColor="@color/black"
+                        android:layout_width="110dp"
+                        android:textColor="@color/white"
 
-                        android:background="@drawable/background_bordestabla"
+                        android:background="@drawable/background_bordestablanara"
                         android:layout_height="wrap_content"
                         android:textStyle="bold" />
 
