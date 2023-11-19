@@ -42,6 +42,10 @@ android {
     buildFeatures {
         viewBinding=true
         }
+    packagingOptions {
+        exclude ("META-INF/DEPENDENCIES")
+    }
+
 }
 
 dependencies {
@@ -56,6 +60,12 @@ dependencies {
     implementation ("androidx.navigation:navigation-fragment-ktx:2.7.4")
     implementation ("androidx.navigation:navigation-ui-ktx:2.7.4")
     implementation ("androidx.activity:activity-ktx:1.8.0")
+//    implementation ("org.apache.pdfbox:pdfbox:2.0.25")
+
+    implementation ("com.itextpdf:itextpdf:5.5.13")
+
+
+
 
     //Importando las librería para cifrar contraseñas utilizando el algoritmo bcrypt
     implementation ("org.mindrot:jbcrypt:0.4")
