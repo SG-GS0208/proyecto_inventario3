@@ -1,60 +1,71 @@
 package com.example.proyecto_inventario.controlador.servicios.consultas
 
 import android.os.Bundle
+import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import android.widget.TextView
+import androidx.core.content.ContextCompat
 import com.example.proyecto_inventario.R
+import com.example.proyecto_inventario.controlador.ConexionBase.ImplListaDatosDAO
+import com.example.proyecto_inventario.controlador.ConexionBase.preferencias.preferenciasLogin
+import com.example.proyecto_inventario.databinding.FragmentConsultaproductoBinding
+import com.example.proyecto_inventario.databinding.FragmentRegistroproductosBinding
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [consultaproducto.newInstance] factory method to
- * create an instance of this fragment.
- */
-class consultaproducto : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+class consultaproducto : Fragment(R.layout.fragment_consultaproducto) {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+    lateinit var bindingConsultaproductos: FragmentConsultaproductoBinding
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        bindingConsultaproductos = FragmentConsultaproductoBinding.bind(view)
+
+        bindingConsultaproductos.sendButton.setOnClickListener {
+            val userInput = bindingConsultaproductos.userInput.text.toString()
+            addToChatHistory(userInput, true) // true indica que es un mensaje del usuario
+
+            // Simular la respuesta del chatbot
+            val respuestaChatbot = obtenerRespuestaChatbot()
+            mostrarRespuestaEnChat(respuestaChatbot, false) // false indica que es un mensaje del chatbot
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_consultaproducto, container, false)
+    private fun addToChatHistory(message: String, isUser: Boolean) {
+        val linearLayout = bindingConsultaproductos.chatHistoryContainer
+
+        // Crear un TextView para el mensaje
+        val messageTextView = TextView(requireContext())
+        messageTextView.text = message
+
+        // Asignar estilos según si es un mensaje del usuario o del chatbot
+        val gravity = if (isUser) Gravity.START else Gravity.END
+        val backgroundColor = if (isUser) R.drawable.background_bordestabla else R.drawable.background_bordeschatbot
+        val textColor = if (isUser) R.color.black else R.color.letras
+
+        messageTextView.setBackgroundResource(backgroundColor)
+        messageTextView.setTextColor(ContextCompat.getColor(requireContext(), textColor))
+        messageTextView.gravity = gravity
+
+        // Agregar el nuevo mensaje al contenedor del LinearLayout dentro del ScrollView
+        linearLayout.addView(messageTextView)
+
+        // Desplazarse al final del ScrollView para mostrar el nuevo mensaje
+        bindingConsultaproductos.chatHistory.post {
+            bindingConsultaproductos.chatHistory.fullScroll(View.FOCUS_DOWN)
+        }
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment consultaproducto.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            consultaproducto().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    private fun mostrarRespuestaEnChat(respuesta: String, isUser: Boolean) {
+        addToChatHistory(respuesta, isUser)
+    }
+
+    private fun obtenerRespuestaChatbot(): String {
+        // Simular una respuesta de un chatbot con respuestas predefinidas
+        val respuestas = listOf("¡Hola!", "¿En qué puedo ayudarte?", "Gracias por tu mensaje.")
+        return respuestas.random()
     }
 }
