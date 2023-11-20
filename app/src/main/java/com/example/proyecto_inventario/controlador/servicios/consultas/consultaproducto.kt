@@ -23,7 +23,9 @@ import com.example.proyecto_inventario.databinding.FragmentRegistroproductosBind
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
+import java.io.File
 import java.io.FileOutputStream
+
 
 import java.io.IOException
 
@@ -43,14 +45,14 @@ class consultaproducto : Fragment(R.layout.fragment_consultaproducto) {
 
             if (userInput.toLowerCase().startsWith("ver")) {
                 // Obtener el nombre del producto
-                val nombreProducto = userInput.substring("ver".length)
+                val nombreProducto = userInput.substring("informacion".length)
 
-                // Crear el PDF en blanco
-                val success = generarPdf("$nombreProducto.pdf", "")
+                // Generar el PDF y obtener el resultado
+                val success = generarPdf("$nombreProducto.pdf")
 
                 // Enviar un mensaje al chatbot
                 if (success) {
-                    mostrarRespuestaEnChat("PDF generado: $nombreProducto.pdf", false)
+                    mostrarRespuestaEnChat("PDF descargado Informacion.pdf", false)
                 } else {
                     mostrarRespuestaEnChat("Error al generar el PDF", false)
                 }
@@ -59,8 +61,9 @@ class consultaproducto : Fragment(R.layout.fragment_consultaproducto) {
                 val respuestaChatbot = obtenerRespuestaChatbot()
                 mostrarRespuestaEnChat(respuestaChatbot, false) // false indica que es un mensaje del chatbot
             }
-        }
+            addToChatHistory(userInput, true)
 
+        }
 
 
     }
@@ -82,7 +85,7 @@ class consultaproducto : Fragment(R.layout.fragment_consultaproducto) {
         messageTextView.gravity = gravity
 
         // Agregar el nuevo mensaje al contenedor del LinearLayout dentro del ScrollView
-        linearLayout.addView(messageTextView)
+        linearLayout.addView(messageTextView, 0)
 
         // Desplazarse al final del ScrollView para mostrar el nuevo mensaje
         bindingConsultaproductos.chatHistory.post {
@@ -94,22 +97,38 @@ class consultaproducto : Fragment(R.layout.fragment_consultaproducto) {
         addToChatHistory(respuesta, isUser)
     }
 
-    private fun generarPdf(filename: String , data:String):Boolean{
+    private fun generarPdf(nombreArchivo: String): Boolean {
+        return try {
+            val estado = Environment.getExternalStorageState()
+            if (Environment.MEDIA_MOUNTED == estado) {
+                // Obtén el directorio de almacenamiento externo
+                val directorio = File(Environment.getExternalStorageDirectory(), "Download/pdfapp")
 
-        val document: Document = Document()
-        val writer: PdfWriter = PdfWriter.getInstance(document, FileOutputStream(filename))
+                // Asegúrate de que el directorio exista, si no, créalo
+                if (!directorio.exists()) {
+                    directorio.mkdirs()
+                }
 
-        // Agregar el contenido al documento
-        document.add(Paragraph(data))
+                // Crea el archivo PDF en el directorio
+                val archivoPdf = File(directorio, "Informacion.pdf")
 
-        // Cerrar el documento
-        document.close()
+                // Crea el FileOutputStream
+                val fos = FileOutputStream(archivoPdf)
 
-        // Devolver true si el PDF se creó correctamente
-        return true
+                // Aquí sigue el código para escribir en el archivo PDF
+
+                // Cierre el FileOutputStream al finalizar
+                fos.close()
+
+                true // Indica éxito en la generación del PDF
+            } else {
+                false // Indica que el almacenamiento externo no está disponible para escritura
+            }
+        } catch (e: IOException) {
+            e.printStackTrace()
+            false // Indica error en la generación del PDF
+        }
     }
-
-
 
 
 

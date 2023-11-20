@@ -7,11 +7,15 @@ import java.sql.SQLException
 class conexiobasededatos {
     /**LA BASE DE DATOS USADA ES SQL SERVER**/
     /**Variable ip, donde se encuentra el servidor de base de datos**/
+/*
    private val ip = "192.168.100.59:1433"
-   /* private val ip = "192.168.1.77:1433"*/
+*/
+   private val ip = "192.168.1.77:1433"
     /**Variable db, nombre de la base de datos**/
+/*
     private val db="BD_OFICIAL"
-    /* private val db="BD_ALMACENEJEMPLO"*/
+*/
+    private val db="BD_ALMACENEJEMPLO"
     /**Variable user, usuario para el acceso a la base de datos**/
     private val user="sa"
     /**Variable pass, clave para el acceso a la base de datos**/
