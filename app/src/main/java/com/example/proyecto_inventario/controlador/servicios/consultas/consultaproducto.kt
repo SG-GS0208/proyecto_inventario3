@@ -20,7 +20,11 @@ import com.example.proyecto_inventario.controlador.ConexionBase.ImplListaDatosDA
 import com.example.proyecto_inventario.controlador.ConexionBase.preferencias.preferenciasLogin
 import com.example.proyecto_inventario.databinding.FragmentConsultaproductoBinding
 import com.example.proyecto_inventario.databinding.FragmentRegistroproductosBinding
+import com.itextpdf.text.BaseColor
 import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException
+import com.itextpdf.text.Element
+import com.itextpdf.text.Font
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
 import java.io.File
@@ -115,9 +119,56 @@ class consultaproducto : Fragment(R.layout.fragment_consultaproducto) {
                 // Crea el FileOutputStream
                 val fos = FileOutputStream(archivoPdf)
 
-                // Aquí sigue el código para escribir en el archivo PDF
+                // Crea el documento PDF
+                val documento = Document()
 
-                // Cierre el FileOutputStream al finalizar
+                // Asocia el documento con el FileOutputStream
+                PdfWriter.getInstance(documento, fos)
+
+                // Abre el documento para escribir en él
+                documento.open()
+
+                // Agrega el título en rojo
+                val titulo = Paragraph("STOCK MASTER", Font(Font.FontFamily.HELVETICA, 18f, Font.BOLD, BaseColor.RED))
+                titulo.alignment = Element.ALIGN_CENTER
+                documento.add(titulo)
+
+                // Agrega un espacio en blanco
+                documento.add(Paragraph(" "))
+
+                // Agrega el texto en párrafo
+                val texto = "STOCK MASTER  es un aplicativo movil que esta diseñado   para facilitar la gestión de inventario y el registro de productos."+
+                        "Con nuestras características intuitivas, podrás llevar un control eficiente de tus productos y mantener un registro detallado\n"+
+                        "Funciones Principales:\n" +
+                        "\n" +
+                        "Registro de Productos: Agrega nuevos productos fácilmente, ingresando información clave como nombre, descripción, categoría y precio.\n" +
+                        "Inventario en Tiempo Real: Mantén un seguimiento en tiempo real de la cantidad de productos disponibles en tu inventario.\n" +
+                        "Actualización de Precios: Modifica los precios de los productos de manera rápida y sencilla.\n" +
+                        "Historial de Movimientos: Accede a un historial completo de todas las transacciones y modificaciones realizadas en tu inventario.\n"+
+                        "Notificaciones de Inventario Bajo: Recibe alertas automáticas cuando la cantidad de un producto se encuentra por debajo de un umbral establecido.\n"+
+                        "\n" +
+                        " Generación de Informes: Crea informes detallados sobre el estado actual del inventario, las ventas y las tendencias.\n"+
+                        "\n" +
+                         "Escaneo de Códigos de Barras: Utiliza la cámara de tu dispositivo para escanear códigos de barras y agilizar el proceso de registro.\n"+
+                        "\n" +
+                        "Exportación e Importación de Datos: Comparte y respalda tu información mediante la exportación e importación de datos en formatos compatibles.\n"+
+                        "\n" +
+                        "Seguridad: Garantizamos la seguridad de tus datos con medidas de cifrado y acceso seguro.\n"+
+                        "\n" +
+                        "Soporte Técnico: Ofrecemos soporte técnico para resolver cualquier problema y mejorar la experiencia del usuario.\n"+
+                        "\n" +
+                        "Actualizaciones Constantes: Nos comprometemos a mejorar y agregar nuevas funcionalidades de forma regular para adaptarnos a tus necesidades cambiantes.\n"
+
+
+
+
+                val parrafo = Paragraph(texto)
+                documento.add(parrafo)
+
+                // Cierra el documento
+                documento.close()
+
+                // Cierra el FileOutputStream al finalizar
                 fos.close()
 
                 true // Indica éxito en la generación del PDF
@@ -127,9 +178,11 @@ class consultaproducto : Fragment(R.layout.fragment_consultaproducto) {
         } catch (e: IOException) {
             e.printStackTrace()
             false // Indica error en la generación del PDF
+        } catch (e: DocumentException) {
+            e.printStackTrace()
+            false // Indica error en la creación del documento PDF
         }
     }
-
 
 
 

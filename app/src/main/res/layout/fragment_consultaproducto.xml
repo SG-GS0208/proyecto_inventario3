@@ -36,6 +36,7 @@
         android:id="@+id/chat_history"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:background="@drawable/background_bordeschatbot"
         app:layout_constraintTop_toBottomOf="@id/send_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
